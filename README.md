@@ -27,7 +27,7 @@ Astro site with Sanity-managed pages, built as static files for GitHub Pages.
    npm run studio
    ```
 
-   Open the local URL printed by the command (usually `http://localhost:3333`). Edit and publish pages there. The URL slugs must remain `home`, `about`, `become-a-host`, `event`, `join-a-dinner`, and `join-the-team`.
+   Open the local URL printed by the command (usually `http://localhost:3333`). Edit and publish pages there. Keep the homepage slug as `home`; other published pages with unique slugs are generated automatically.
 5. To host the editor on Sanity instead of running it locally, use `npm run studio:deploy` after logging in. Sanity will provide a hosted Studio URL.
 
 ## Run and build locally
@@ -49,8 +49,27 @@ npm run dev
    - `SANITY_DATASET`: the dataset name (usually `production`).
 3. For a public dataset, no Sanity read token is needed. For a private dataset, add `SANITY_API_READ_TOKEN` under **Actions → Secrets**. Content rendered into a static site is public to site visitors even if it is fetched with a private read token.
 4. In **Settings → Pages**, select **GitHub Actions** as the build and deployment source.
-5. Push to `main`, or open **Actions → Deploy to GitHub Pages → Run workflow** to rebuild after publishing content in Sanity. The workflow derives the correct `/repository-name/` path for a project site.
+5. Push to `main`, or open **Actions → Deploy to GitHub Pages → Run workflow** to build the site. The workflow derives the correct `/repository-name/` path for a project site.
 
 For a custom domain or a different path, add the Actions variable `ASTRO_BASE_PATH` (use `/` for a root domain, or a path ending in `/`). You can optionally set `ASTRO_SITE_URL` to the canonical site origin.
 
-The Sanity project ID and dataset are public configuration, not secrets. Never commit API tokens. If Sanity content changes, run the workflow manually to publish the updated static site.
+The Sanity project ID and dataset are public configuration, not secrets. Never commit API tokens. Content rendered into the static site is public.
+
+### Deploy when content is published in Sanity
+
+The GitHub Pages workflow can be triggered by a Sanity webhook. Create a fine-grained personal access token in GitHub with access to only this repository and **Actions: Read and write** permission. Set an expiration date and keep the token private.
+
+In Sanity, open **Manage → API → Webhooks** and create a document webhook with:
+
+- **URL:** `https://api.github.com/repos/Thijss/cookandconnect/actions/workflows/deploy.yml/dispatches`
+- **Dataset:** `production`
+- **HTTP method:** `POST`
+- **Triggers:** create and update
+- **Filter:** `_type == "page"`
+- **Projection:** `{ "ref": "main" }`
+- **HTTP headers:**
+  - `Authorization`: `Bearer <fine-grained-token>`
+  - `Accept`: `application/vnd.github+json`
+  - `X-GitHub-Api-Version`: `2022-11-28`
+
+Leave draft documents excluded so edits trigger a deploy only after publishing. Each build generates routes and navigation links from published Sanity pages, so a new page with a unique slug appears after it is published and deployed.

@@ -1,0 +1,16 @@
+---
+import SanityContentPage from '../components/SanityContentPage.astro';
+import { getNavigationPages } from '../lib/sanity';
+
+export async function getStaticPaths() {
+  const pages = await getNavigationPages();
+
+  return pages
+    .filter(({ slug }) => slug !== 'home')
+    .map(({ slug }) => ({ params: { slug }, props: { slug } }));
+}
+
+const { slug } = Astro.props;
+---
+
+<SanityContentPage slug={slug} />

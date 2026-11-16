@@ -1,18 +1,18 @@
 ---
+import type { SanityPageLink } from '../lib/sanity';
+
 interface Props {
   currentPage: string;
+  navigationPages: SanityPageLink[];
 }
 
-const { currentPage } = Astro.props;
+const { currentPage, navigationPages } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const navigation = [
-  { slug: 'home', path: '', label: 'Home' },
-  { slug: 'become-a-host', path: 'become-a-host/', label: 'Become a host' },
-  { slug: 'join-a-dinner', path: 'join-a-dinner/', label: 'Join a dinner' },
-  { slug: 'join-the-team', path: 'join-the-team/', label: 'Join the team' },
-  { slug: 'event', path: 'event/', label: 'Event' },
-  { slug: 'about', path: 'about/', label: 'About' },
-];
+const navigation = navigationPages.map((page) => ({
+  ...page,
+  path: page.slug === 'home' ? '' : `${page.slug}/`,
+  label: page.slug === 'home' ? 'Home' : page.title,
+}));
 ---
 
 <header class="site-header">
