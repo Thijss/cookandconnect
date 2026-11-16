@@ -1,4 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans:wght@300;400;600;700&display=swap");
+@import url("https://cdn.zyrosite.com/u1/google-fonts/font-faces?family=Lobster:wght@400&family=Open+Sans:wght@300;400&display=swap");
+
+@font-face {
+  font-family: "Roca Two Bold Bold";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://assets.zyrosite.com/moOyWk5MtlCZFGPv/Roca%20Two%20Bold%20Bold.woff2")
+    format("woff2");
+}
 
 :root {
   color-scheme: light;
@@ -6,7 +15,7 @@
   --ink: #2b2a29;
   --text: #262626;
   --paper: #fffaf1;
-  font-family: "Open Sans", Arial, sans-serif;
+  font-family: "Open Sans", "Luxurious Roman", sans-serif;
   color: var(--text);
   background: var(--paper);
   font-synthesis: none;
@@ -100,9 +109,10 @@ a {
 .hero h1 {
   margin: 0;
   color: var(--gold);
-  font-size: clamp(46px, 6vw, 72px);
+  font-family: "Roca Two Bold Bold", "Lobster", "Abril Fatface", display;
+  font-size: 64px;
   font-weight: 400;
-  line-height: 1.25;
+  line-height: 1.3;
   text-shadow: 0 2px 14px rgb(0 0 0 / 22%);
   animation: rise-in 700ms ease-out both;
 }
@@ -145,7 +155,7 @@ a {
 .prose h1,
 .prose h2,
 .footer-contact h2 {
-  font-family: "Lobster", Georgia, cursive;
+  font-family: "Lobster", "Abril Fatface", display;
   font-weight: 400;
 }
 
@@ -314,6 +324,13 @@ html.has-scroll-reveal [data-reveal].is-visible {
     gap: 14px;
   }
 
+}
+
+@media (max-width: 920px) {
+  .hero h1 {
+    font-size: 40px;
+    line-height: 1.8;
+  }
 }
 
 @media (max-width: 700px) {
