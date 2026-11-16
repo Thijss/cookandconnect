@@ -1,0 +1,33 @@
+---
+import { PortableText } from '@portabletext/astro';
+import PortableLink from './PortableLink.astro';
+import { getPage, getSanityImageUrl } from '../lib/sanity';
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const page = await getPage(slug);
+const posterUrl = page.poster ? getSanityImageUrl(page.poster.asset, 1120) : null;
+---
+
+<SiteLayout title={`${page.title} | Cook & Connect`} description={page.description} currentPage={slug}>
+  <main class="content-page">
+    <article class="prose">
+      <h1>{page.title}</h1>
+      <PortableText value={page.body} components={{ mark: { link: PortableLink } }} />
+      {posterUrl && (
+        <figure class="event-poster">
+          <img
+            src={posterUrl}
+            alt={page.poster?.alt || 'Cook & Connect event poster'}
+            width="560"
+            loading="lazy"
+          />
+        </figure>
+      )}
+    </article>
+  </main>
+</SiteLayout>

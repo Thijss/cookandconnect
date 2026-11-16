@@ -1,0 +1,20 @@
+---
+import type { MarkProps } from '@portabletext/astro/types';
+
+type Props = MarkProps<{ href?: string }>;
+
+const { node } = Astro.props;
+const href = node.markDef?.href ?? '';
+const isSafe = /^(https?:\/\/|mailto:|tel:)/i.test(href);
+const isExternal = /^https?:\/\//i.test(href);
+---
+
+{
+  isSafe ? (
+    <a href={href} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noreferrer' : undefined}>
+      <slot />
+    </a>
+  ) : (
+    <slot />
+  )
+}
