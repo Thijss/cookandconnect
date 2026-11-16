@@ -64,7 +64,7 @@ In Sanity, open **Manage → API → Webhooks** and create a document webhook wi
 - **URL:** `https://api.github.com/repos/Thijss/cookandconnect/actions/workflows/deploy.yml/dispatches`
 - **Dataset:** `production`
 - **HTTP method:** `POST`
-- **Triggers:** create and update
+- **Triggers:** create, update, and delete
 - **Filter:** `_type == "page"`
 - **Projection:** `{ "ref": "main" }`
 - **HTTP headers:**

@@ -19,6 +19,12 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'menuLabel',
+      title: 'Menu label',
+      description: 'Optional label for this page in the site navigation.',
+      type: 'string',
+    }),
+    defineField({
       name: 'description',
       title: 'Search description',
       type: 'text',

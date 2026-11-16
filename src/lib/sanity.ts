@@ -16,6 +16,7 @@ export interface SanityPage {
 
 export interface SanityPageLink {
   title: string;
+  menuLabel?: string;
   slug: string;
 }
 
@@ -36,6 +37,7 @@ export async function getNavigationPages(): Promise<SanityPageLink[]> {
   const pages = await client.fetch<SanityPageLink[]>(
     `*[_type == "page" && defined(slug.current)]{
       title,
+      menuLabel,
       "slug": slug.current
     }`,
   );
