@@ -72,7 +72,7 @@ const pages = [
     tagline: 'Where different worlds come together',
     body: [
       p(
-        'Cook & Connect brings people together by connecting refugees and locals in a warm, home setting at local people’s homes — to create a more understanding and compassionate world.',
+        "Cook & Connect brings people together by connecting refugees and locals in a warm, home setting at local people's homes - to create a more understanding and compassionate world.",
       ),
     ],
   },
